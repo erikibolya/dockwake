@@ -15,6 +15,7 @@ from collections.abc import Callable
 
 SESSION_RE = re.compile(r"^[A-Za-z0-9_-]{8,64}$")
 ACTIVE_STATES = ("starting", "ready", "error")
+STOP_BUTTON_POSITIONS = ("top-right", "top-left", "bottom-right", "bottom-left")
 
 MESSAGES = {
     "en": {
@@ -130,6 +131,7 @@ class Launcher:
         app_url: str,
         app_icon_url: str = "",
         language: str = "en",
+        stop_button_position: str = "top-right",
         idle_stop_seconds: int = 60,
         session_stale_seconds: int = 180,
         start_timeout_seconds: int = 120,
@@ -144,6 +146,9 @@ class Launcher:
         self.app_icon_url = app_icon_url
         self.language = language if language in MESSAGES else "en"
         self.messages = MESSAGES[self.language]
+        self.stop_button_position = (
+            stop_button_position if stop_button_position in STOP_BUTTON_POSITIONS else "top-right"
+        )
         self.idle_stop_seconds = max(5, int(idle_stop_seconds))
         self.session_stale_seconds = max(60, int(session_stale_seconds))
         self.start_timeout_seconds = max(10, int(start_timeout_seconds))
@@ -477,5 +482,6 @@ class Launcher:
             "app_url": self.app_url,
             "app_icon_url": self.app_icon_url,
             "language": self.language,
+            "stop_button_position": self.stop_button_position,
             "idle_stop_seconds": self.idle_stop_seconds,
         }
