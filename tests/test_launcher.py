@@ -230,6 +230,7 @@ class LauncherTests(unittest.TestCase):
         self.assertEqual(status["app_name"], "Test App")
         self.assertEqual(status["app_url"], "https://app.example/")
         self.assertEqual(status["language"], "en")
+        self.assertEqual(status["stop_button_position"], "top-right")
         self.assertEqual(status["idle_stop_seconds"], 60)
         self.assertTrue(Launcher.valid_session(self.session))
         self.assertFalse(Launcher.valid_session("short"))
@@ -264,6 +265,35 @@ class LauncherTests(unittest.TestCase):
         self.assertEqual(status["state"], "stopped")
         self.assertIsNone(status["error"])
         self.assertFalse(status["managed"])
+
+    def test_stop_button_position(self) -> None:
+        for position in (
+            "top-right",
+            "top-left",
+            "bottom-right",
+            "bottom-left",
+        ):
+            launcher = Launcher(
+                self.docker,
+                self.api,
+                self.ui,
+                app_name="Test App",
+                app_url="https://app.example/",
+                stop_button_position=position,
+                clock=self.clock,
+            )
+            self.assertEqual(launcher.status()["stop_button_position"], position)
+
+        invalid = Launcher(
+            self.docker,
+            self.api,
+            self.ui,
+            app_name="Test App",
+            app_url="https://app.example/",
+            stop_button_position="middle",
+            clock=self.clock,
+        )
+        self.assertEqual(invalid.status()["stop_button_position"], "top-right")
 
     def test_czech_messages(self) -> None:
         launcher = Launcher(

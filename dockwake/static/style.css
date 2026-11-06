@@ -12,6 +12,7 @@
   --danger: #ef4444;
   --ok: #22c55e;
   --shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+  --stop-offset: 14px;
 }
 
 * {
@@ -241,9 +242,6 @@ button {
 
 .floating-stop {
   position: fixed;
-  top: 14px;
-  right: 14px;
-  bottom: auto;
   z-index: 10;
   display: inline-flex;
   align-items: center;
@@ -268,6 +266,26 @@ button {
   border-color: rgba(239, 68, 68, 0.5);
   color: #fecaca;
   outline: none;
+}
+
+.floating-stop.stop-top-right {
+  top: var(--stop-offset);
+  right: var(--stop-offset);
+}
+
+.floating-stop.stop-top-left {
+  top: var(--stop-offset);
+  left: var(--stop-offset);
+}
+
+.floating-stop.stop-bottom-right {
+  bottom: var(--stop-offset);
+  right: var(--stop-offset);
+}
+
+.floating-stop.stop-bottom-left {
+  bottom: var(--stop-offset);
+  left: var(--stop-offset);
 }
 
 .dot {
@@ -296,6 +314,10 @@ button {
 }
 
 @media (max-width: 520px) {
+  :root {
+    --stop-offset: 10px;
+  }
+
   .screen {
     padding: 16px;
   }
@@ -311,11 +333,6 @@ button {
 
   .brand {
     gap: 13px;
-  }
-
-  .floating-stop {
-    top: 10px;
-    right: 10px;
   }
 }
 
