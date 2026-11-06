@@ -2,6 +2,11 @@
 
 All notable changes to this project are documented here.
 
+## 0.1.1 - 2026-11-06
+
+- Fix the iframe CSS selector (`#app-frame`) so the embedded app fills the viewport.
+- Add a Playwright assertion for the iframe viewport size to prevent regressions.
+
 ## 0.1.0 - 2026-11-06
 
 - Initial public release.
