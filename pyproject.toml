@@ -1,0 +1,61 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dockwake"
+version = "0.1.0"
+description = "Wake a Docker container on demand, show its web UI, and stop it when the last tab closes."
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+authors = [{ name = "Erik Ibolya" }]
+keywords = [
+  "docker",
+  "self-hosted",
+  "homelab",
+  "traefik",
+  "reverse-proxy",
+  "on-demand",
+  "container",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Web Environment",
+  "Intended Audience :: System Administrators",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: System :: Systems Administration",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "playwright>=1.50",
+  "ruff>=0.9",
+]
+
+[project.urls]
+Homepage = "https://github.com/erikibolya/dockwake"
+Issues = "https://github.com/erikibolya/dockwake/issues"
+Changelog = "https://github.com/erikibolya/dockwake/blob/main/CHANGELOG.md"
+
+[tool.setuptools.packages.find]
+include = ["dockwake*"]
+
+[tool.setuptools.package-data]
+dockwake = ["static/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

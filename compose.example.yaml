@@ -1,0 +1,91 @@
+# DockWake + Uptime Kuma behind Traefik.
+#
+# Replace example.com, the basic-auth hash and the Traefik entrypoint/certresolver
+# with your own values. The target app's Traefik host (status.example.com) is the
+# URL loaded in the iframe; the launcher host (wake.example.com) is what you open.
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: uptime-kuma
+    restart: unless-stopped
+    volumes:
+      - uptime-kuma-data:/app/data
+    networks:
+      - appnet
+      - traefik_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik_network"
+      - "traefik.http.routers.uptime-kuma.rule=Host(`status.example.com`)"
+      - "traefik.http.routers.uptime-kuma.entrypoints=websecure"
+      - "traefik.http.routers.uptime-kuma.tls=true"
+      - "traefik.http.routers.uptime-kuma.tls.certresolver=cloudflare"
+      - "traefik.http.services.uptime-kuma.loadbalancer.server.port=3001"
+
+  dockwake:
+    image: ghcr.io/erikibolya/dockwake:latest
+    container_name: dockwake
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
+    environment:
+      DOCKWAKE_PORT: "8080"
+      DOCKWAKE_TARGET_CONTAINER: "uptime-kuma"
+      DOCKWAKE_APP_NAME: "Uptime Kuma"
+      DOCKWAKE_APP_URL: "https://status.example.com/"
+      DOCKWAKE_TARGET_API_URL: "http://uptime-kuma:3001/"
+      DOCKWAKE_TARGET_UI_URL: "https://status.example.com/"
+      DOCKWAKE_LAUNCHER_ORIGIN: "https://wake.example.com"
+      DOCKWAKE_LANGUAGE: "en"
+      DOCKWAKE_IDLE_STOP_SECONDS: "60"
+      DOCKWAKE_STOP_GRACE_SECONDS: "30"
+      DOCKWAKE_START_TIMEOUT_SECONDS: "120"
+    networks:
+      - appnet
+      - traefik_network
+      - dockwake_internal
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik_network"
+      - "traefik.http.routers.dockwake.rule=Host(`wake.example.com`)"
+      - "traefik.http.routers.dockwake.entrypoints=websecure"
+      - "traefik.http.routers.dockwake.tls=true"
+      - "traefik.http.routers.dockwake.tls.certresolver=cloudflare"
+      - "traefik.http.routers.dockwake.service=dockwake"
+      - "traefik.http.routers.dockwake.middlewares=dockwake-auth@docker"
+      # Generate with: openssl passwd -apr1
+      # In Compose YAML every "$" in the hash must be written as "$$".
+      - "traefik.http.middlewares.dockwake-auth.basicauth.users=admin:$$apr1$$REPLACE$$ME"
+      - "traefik.http.services.dockwake.loadbalancer.server.port=8080"
+
+  dockwake-socket-proxy:
+    image: lscr.io/linuxserver/socket-proxy:latest
+    container_name: dockwake-socket-proxy
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /run
+      - /tmp
+    environment:
+      ALLOW_START: "1"
+      ALLOW_STOP: "1"
+      ALLOW_RESTARTS: "0"
+      CONTAINERS: "0"
+      POST: "0"
+      PING: "1"
+      VERSION: "1"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - dockwake_internal
+
+networks:
+  appnet:
+  dockwake_internal:
+    internal: true
+  traefik_network:
+    external: true
+
+volumes:
+  uptime-kuma-data:

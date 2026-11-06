@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="DockWake">
+  <defs>
+    <linearGradient id="bg" x1="8" y1="6" x2="58" y2="60" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#38bdf8"/>
+      <stop offset="0.55" stop-color="#3b82f6"/>
+      <stop offset="1" stop-color="#0e7490"/>
+    </linearGradient>
+    <linearGradient id="play" x1="26" y1="22" x2="42" y2="42" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#e0f2fe"/>
+      <stop offset="1" stop-color="#7dd3fc"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#bg)"/>
+  <rect x="13" y="17" width="38" height="30" rx="8" fill="rgba(7,13,24,0.58)"
+        stroke="rgba(224,242,254,0.5)" stroke-width="2"/>
+  <path d="M27 25.5 40 32 27 38.5Z" fill="url(#play)"/>
+  <path d="M20 51h24" stroke="rgba(224,242,254,0.55)" stroke-width="2"
+        stroke-linecap="round" stroke-dasharray="2 5"/>
+</svg>

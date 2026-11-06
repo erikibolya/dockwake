@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b1220">
+  <title>DockWake</title>
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <main id="start-screen" class="screen">
+    <section class="card">
+      <div class="brand">
+        <img id="app-icon" src="/static/favicon.svg" alt="" width="44" height="44">
+        <div>
+          <h1 id="app-name">App</h1>
+          <p class="muted" data-i18n="subtitle">
+            This app is stopped to save resources.
+          </p>
+        </div>
+      </div>
+
+      <div id="start-error" class="alert" role="alert" aria-live="polite" hidden></div>
+
+      <button id="start-button" class="primary" type="button">
+        <span class="button-icon" aria-hidden="true">&#9654;</span>
+        <span id="start-label" data-i18n="start">Start app</span>
+      </button>
+      <button id="force-stop-button" class="secondary" type="button" hidden>
+        <span data-i18n="force_stop">Stop app</span>
+      </button>
+
+      <p class="hint">
+        <span data-i18n="hint_start">Starting usually takes 15&ndash;20 seconds.</span>
+        <span id="idle-hint"></span>
+      </p>
+    </section>
+  </main>
+
+  <main id="loading-screen" class="screen" hidden>
+    <section class="card">
+      <div class="spinner" aria-hidden="true"></div>
+      <h2 id="loading-title">Starting&hellip;</h2>
+      <p id="loading-detail" class="muted">Waiting for the app API.</p>
+      <div class="progress" aria-hidden="true"><div class="progress-bar"></div></div>
+      <p class="hint">
+        <span data-i18n="loading_hint">Please keep this tab open.</span>
+        <span id="loading-elapsed" class="elapsed"></span>
+      </p>
+      <button id="cancel-button" class="secondary" type="button">
+        <span data-i18n="cancel">Cancel and stop</span>
+      </button>
+    </section>
+  </main>
+
+  <section id="viewer" hidden aria-label="App">
+    <iframe
+      id="app-frame"
+      title="App"
+      allow="fullscreen; autoplay; clipboard-write"
+      referrerpolicy="no-referrer"
+    ></iframe>
+    <button id="stop-button" class="floating-stop" type="button" title="Stop">
+      <span class="dot" aria-hidden="true"></span>
+      <span data-i18n="stop">Stop</span>
+    </button>
+  </section>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>
