@@ -121,6 +121,11 @@ def test_start_shows_iframe_and_closing_tab_stops_app(corner: str) -> None:
                     timeout=30000
                 )
 
+                frame_box = frame.bounding_box()
+                assert frame_box is not None
+                assert frame_box["width"] >= VIEW_WIDTH - 2, frame_box
+                assert frame_box["height"] >= VIEW_HEIGHT - 2, frame_box
+
                 assert_corner(page.locator("#stop-button").bounding_box(), corner)
 
                 # Navigating away fires pagehide, exactly like closing the tab.

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dockwake"
-version = "0.1.0"
+version = "0.1.1"
 description = "Wake a Docker container on demand, show its web UI, and stop it when the last tab closes."
 readme = "README.md"
 requires-python = ">=3.12"

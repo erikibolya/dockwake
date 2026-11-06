@@ -19,6 +19,7 @@
 | Security headers / CSP | `test_index_is_served_with_security_headers` | HTTP |
 | Path traversal rejected | `test_path_traversal_is_rejected`, `test_static_whitelist_rejects_other_paths` | HTTP |
 | HEAD requests | `test_head_index` | HTTP |
+| Iframe fills viewport | `e2e/test_ui.py` (iframe bounding box) | browser |
 | Stop button corner (all four) | `e2e/test_ui.py` (parameterized bounding boxes), `test_stop_button_position`, `tests/test_config.py` | browser + unit + config |
 | Czech backend messages | `test_czech_messages` | unit |
 | Iframe content | `e2e/test_ui.py` (`Fake app` text inside frame) | browser |
