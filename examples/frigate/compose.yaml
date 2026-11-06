@@ -54,6 +54,7 @@ services:
       DOCKWAKE_TARGET_UI_URL: "https://frigate-ui.example.com/"
       DOCKWAKE_LAUNCHER_ORIGIN: "https://wake.example.com"
       DOCKWAKE_LANGUAGE: "cs"
+      DOCKWAKE_STOP_BUTTON_POSITION: "top-right"
       DOCKWAKE_IDLE_STOP_SECONDS: "60"
       DOCKWAKE_STOP_GRACE_SECONDS: "30"
       DOCKWAKE_START_TIMEOUT_SECONDS: "120"

@@ -314,6 +314,7 @@
     $("app-frame").title = appName;
     $("viewer").setAttribute("aria-label", appName);
     $("stop-button").title = t("stop");
+    $("stop-button").className = `floating-stop stop-${next.stop_button_position || "top-right"}`;
     document.title = appName;
     $("idle-hint").textContent = t("hint_stop", {
       seconds: next.idle_stop_seconds,

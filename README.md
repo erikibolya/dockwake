@@ -51,6 +51,7 @@ Uptime Kuma, Immich, Paperless, a dashboard, an admin panel, ...
 - **Secure by default.** CSRF header, origin check, path whitelist, CSP,
   `X-Frame-Options: DENY`, read-only container, non-root user.
 - **English and Czech UI** (`DOCKWAKE_LANGUAGE=en|cs`).
+- **Configurable Stop button corner** (`DOCKWAKE_STOP_BUTTON_POSITION`).
 - **No runtime dependencies.** Python standard library only.
 
 ## How it works
@@ -76,8 +77,10 @@ DockWake ──> restricted socket proxy ──> docker start/stop target
 
 The target UI must be reachable by the browser and must not block framing with
 `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors`. Most
-self-hosted apps work; if one does not, remove the header in your reverse proxy
-or use a UI that allows framing.
+self-hosted apps work, but some need a setting. Uptime Kuma, for example, needs
+`UPTIME_KUMA_DISABLE_FRAME_SAMEORIGIN=true` (the example sets it). If the app has
+no such setting, remove the header in your reverse proxy or use a UI that allows
+framing.
 
 ## Quick start
 
@@ -138,6 +141,7 @@ stopped and started by DockWake; recordings and config are untouched.
 | `DOCKWAKE_TARGET_UI_URL` | `DOCKWAKE_APP_URL` | Public UI URL checked before showing the iframe. |
 | `DOCKWAKE_LAUNCHER_ORIGIN` | empty | Public origin of DockWake, e.g. `https://wake.example.com`. Required for the `sendBeacon` leave path. |
 | `DOCKWAKE_LANGUAGE` | `en` | `en` or `cs`. |
+| `DOCKWAKE_STOP_BUTTON_POSITION` | `top-right` | Corner of the floating Stop button: `top-right`, `top-left`, `bottom-right` or `bottom-left`. |
 | `DOCKWAKE_PORT` | `8080` | Internal HTTP port. |
 | `DOCKWAKE_IDLE_STOP_SECONDS` | `60` | Grace period after the last tab closes. |
 | `DOCKWAKE_SESSION_STALE_SECONDS` | `180` | Fallback when `pagehide` never arrives. |

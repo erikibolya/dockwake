@@ -12,6 +12,7 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
 from .launcher import (
+    STOP_BUTTON_POSITIONS,
     DockerProxyClient,
     Launcher,
     TargetApiClient,
@@ -34,6 +35,7 @@ class Config:
     app_url: str = "https://example.com/"
     app_icon_url: str = ""
     language: str = "en"
+    stop_button_position: str = "top-right"
     launcher_origin: str = ""
     target_ui_url: str = "https://example.com/"
     static_dir: Path = Path(__file__).resolve().parent / "static"
@@ -57,12 +59,16 @@ def config_from_env() -> Config:
     language = os.environ.get("DOCKWAKE_LANGUAGE", "en").lower()
     if language not in SUPPORTED_LANGUAGES:
         language = "en"
+    stop_button_position = os.environ.get("DOCKWAKE_STOP_BUTTON_POSITION", "top-right").lower()
+    if stop_button_position not in STOP_BUTTON_POSITIONS:
+        stop_button_position = "top-right"
     return Config(
         port=env_int("DOCKWAKE_PORT", 8080),
         app_name=os.environ.get("DOCKWAKE_APP_NAME", "App"),
         app_url=app_url,
         app_icon_url=os.environ.get("DOCKWAKE_APP_ICON_URL", ""),
         language=language,
+        stop_button_position=stop_button_position,
         launcher_origin=os.environ.get("DOCKWAKE_LAUNCHER_ORIGIN", "").rstrip("/"),
         target_ui_url=(os.environ.get("DOCKWAKE_TARGET_UI_URL", app_url).rstrip("/") + "/"),
         static_dir=Path(
@@ -291,6 +297,7 @@ def main() -> None:
         app_url=config.app_url,
         app_icon_url=config.app_icon_url,
         language=config.language,
+        stop_button_position=config.stop_button_position,
         idle_stop_seconds=env_int("DOCKWAKE_IDLE_STOP_SECONDS", 60),
         session_stale_seconds=env_int("DOCKWAKE_SESSION_STALE_SECONDS", 180),
         start_timeout_seconds=env_int("DOCKWAKE_START_TIMEOUT_SECONDS", 120),
@@ -299,7 +306,8 @@ def main() -> None:
     server = create_server(launcher, config)
     print(
         f"[dockwake] listening on 0.0.0.0:{config.port}; "
-        f"app={config.app_name!r}; ui={config.app_url}; language={config.language}",
+        f"app={config.app_name!r}; ui={config.app_url}; language={config.language}; "
+        f"stop_button={config.stop_button_position}",
         flush=True,
     )
 

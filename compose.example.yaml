@@ -8,6 +8,9 @@ services:
     image: louislam/uptime-kuma:1
     container_name: uptime-kuma
     restart: unless-stopped
+    environment:
+      # Uptime Kuma blocks cross-origin iframes by default.
+      UPTIME_KUMA_DISABLE_FRAME_SAMEORIGIN: "true"
     volumes:
       - uptime-kuma-data:/app/data
     networks:
@@ -38,6 +41,7 @@ services:
       DOCKWAKE_TARGET_UI_URL: "https://status.example.com/"
       DOCKWAKE_LAUNCHER_ORIGIN: "https://wake.example.com"
       DOCKWAKE_LANGUAGE: "en"
+      DOCKWAKE_STOP_BUTTON_POSITION: "top-right"
       DOCKWAKE_IDLE_STOP_SECONDS: "60"
       DOCKWAKE_STOP_GRACE_SECONDS: "30"
       DOCKWAKE_START_TIMEOUT_SECONDS: "120"

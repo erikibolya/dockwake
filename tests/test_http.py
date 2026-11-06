@@ -30,6 +30,7 @@ class FakeLauncher:
             "app_url": "https://app.example/",
             "app_icon_url": "",
             "language": "en",
+            "stop_button_position": "top-right",
             "idle_stop_seconds": 60,
         }
 
