@@ -8,6 +8,9 @@ services:
     image: louislam/uptime-kuma:1
     container_name: uptime-kuma
     restart: unless-stopped
+    environment:
+      # Uptime Kuma blocks cross-origin iframes by default.
+      UPTIME_KUMA_DISABLE_FRAME_SAMEORIGIN: "true"
     volumes:
       - uptime-kuma-data:/app/data
     networks:

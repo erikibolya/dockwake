@@ -76,8 +76,10 @@ DockWake ──> restricted socket proxy ──> docker start/stop target
 
 The target UI must be reachable by the browser and must not block framing with
 `X-Frame-Options: DENY` or `Content-Security-Policy: frame-ancestors`. Most
-self-hosted apps work; if one does not, remove the header in your reverse proxy
-or use a UI that allows framing.
+self-hosted apps work, but some need a setting. Uptime Kuma, for example, needs
+`UPTIME_KUMA_DISABLE_FRAME_SAMEORIGIN=true` (the example sets it). If the app has
+no such setting, remove the header in your reverse proxy or use a UI that allows
+framing.
 
 ## Quick start
 
